@@ -4,7 +4,7 @@
   "description": "Simple Express server which stores responses of HTTP requests to a MongoDB.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -21,5 +21,9 @@
     "url": "https://github.com/robert-gruner/special-fiesta/issues"
   },
   "homepage": "https://github.com/robert-gruner/special-fiesta#readme",
-  "dependencies": {}
+  "dependencies": {
+    "axios": "^0.18.0",
+    "mongoose": "^5.0.12",
+    "winston": "^2.4.1"
+  }
 }

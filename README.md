@@ -22,4 +22,4 @@ Create a `config.json` file in the project root folder which contains the follow
 }
 ``` 
 
-Run `npm s` to start the application. 
+Run `npm start` to start the application. 
