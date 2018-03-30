@@ -1,0 +1,25 @@
+{
+  "name": "special-fiesta",
+  "version": "1.0.0",
+  "description": "Simple Express server which stores responses of HTTP requests to a MongoDB.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robert-gruner/special-fiesta.git"
+  },
+  "keywords": [
+    "express",
+    "mongo",
+    "http"
+  ],
+  "author": "https://github.com/robert-gruner",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/robert-gruner/special-fiesta/issues"
+  },
+  "homepage": "https://github.com/robert-gruner/special-fiesta#readme",
+  "dependencies": {}
+}
