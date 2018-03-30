@@ -1,26 +1,31 @@
 const Axios = require("axios");
 const Logger = require("winston");
-const process = require("process");
-// const mongoose = require("mongoose");
+const Process = require("process");
+const Mongoose = require("mongoose");
+const DBEntry = require("./db-entry");
 
-let config;
+let config, db;
 
+// Check config for validity
 try {
   config = require("./config.json");
   checkRequiredEntries();
-} catch (e) {
-  exitWithError(e ? e : "Provide a valid config.json file." + e);
+} catch (err) {
+  exitWithError(err ? err : "Provide a valid config.json file." + err);
 }
 
-const interval = config.interval ? config.interval * 1000 : 2000; // Interval in milliseconds
+// Set up Mongo connection
+connectMongo();
 
+// Set up interval
+const interval = config.interval ? config.interval * 1000 : 60000; // Interval in milliseconds
 setInterval(() => {
   doGet();
 }, interval);
 
-function exitWithError(errorMessage) {
-  Logger.error(errorMessage);
-  process.exit();
+function exitWithError(err) {
+  Logger.error(err);
+  Process.exit();
 }
 
 function checkRequiredEntries() {
@@ -31,8 +36,12 @@ function checkRequiredEntries() {
   }
 }
 
-function storeData(obj) {
-  Logger.info(JSON.stringify(obj));
+function storeData(data) {
+  const newEntry = DBEntry({
+    time: Date.now(),
+    value: data
+  });
+  newEntry.save();
 }
 
 function doGet() {
@@ -40,8 +49,24 @@ function doGet() {
     .then((response) => {
       const data = config.dataKey ? response.data[config.dataKey] : response.data;
       storeData(data);
-    })
-    .catch((error) => {
-      exitWithError(error);
-    });
+    }).catch((err) => {
+    exitWithError(err);
+  });
+}
+
+function connectMongo() {
+  const dbName = config.mongoDBName ? config.mongoDBName : "database";
+  const uri = config.mongoURI + dbName;
+
+  Mongoose.connect(uri, (err) => {
+    if (err) {
+      exitWithError(err);
+    }
+  });
+
+  db = Mongoose.connection;
+
+  db.on("err", (err) => {
+    exitWithError(err);
+  });
 }

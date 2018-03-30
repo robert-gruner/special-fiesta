@@ -4,6 +4,7 @@
   "description": "Simple Express server which stores responses of HTTP requests to a MongoDB.",
   "main": "index.js",
   "scripts": {
+    "export": "node exporter.js",
     "start": "node server.js"
   },
   "repository": {
